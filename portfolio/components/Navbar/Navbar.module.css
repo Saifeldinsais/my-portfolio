@@ -1,0 +1,122 @@
+.navbar {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.logo a {
+  font-family: var(--font-orbitron);
+  font-size: 28px;
+  font-weight: 700;
+  text-decoration: none;
+
+  background: linear-gradient(90deg, #0070f3, #7928ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 2px;
+  transition: transform 0.3s ease;
+}
+
+.logo a:hover {
+  transform: scale(1.05);
+}
+
+/* ===================== */
+/* NAV LINKS */
+/* ===================== */
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks li {
+  position: relative;
+}
+
+.navLinks li a {
+  font-family: var(--font-poppins);
+  text-decoration: none;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+/* 🔥 Animated underline */
+.navLinks li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #0070f3, #7928ca);
+  transition: width 0.3s ease;
+}
+
+.navLinks li a:hover::after {
+  width: 100%;
+}
+
+.navLinks li a:hover {
+  color: #0070f3;
+}
+
+/* ===================== */
+/* Responsive */
+/* ===================== */
+
+@media (max-width: 768px) {
+  .navLinks {
+    gap: 18px;
+  }
+
+  .logo a {
+    font-size: 22px;
+  }
+
+  .navLinks li a {
+    font-size: 14px;
+  }
+}
+
+/* ===================== */
+/* SOCIAL ICONS */
+/* ===================== */
+
+.socials {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.socials a {
+  color: #222;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.socials a:hover {
+  transform: translateY(-3px);
+  color: #0070f3;
+}
