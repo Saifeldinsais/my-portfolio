@@ -8,6 +8,7 @@ type EducationItem = {
   description: string;
   highlightsTitle: string;
   highlights: string[];
+  certificateUrl?: string;
 };
 
 const education: EducationItem[] = [
@@ -50,6 +51,7 @@ const education: EducationItem[] = [
       "Bash scripting for automation",
       "Duration: 4 weeks",
     ],
+    certificateUrl: "/certificates/edges-linux.pdf",
   },
   {
     type: "course",
@@ -60,6 +62,7 @@ const education: EducationItem[] = [
       "Built full-stack web applications with the MEAN stack, focusing on REST APIs, authentication, database design, and responsive frontends.",
     highlightsTitle: "Tech Stack",
     highlights: ["MongoDB", "Express.js", "Angular", "Node.js"],
+    certificateUrl: "/certificates/nti-mean.pdf",
   },
   {
     type: "diploma",
@@ -94,7 +97,6 @@ function typeLabel(t: EducationItem["type"]) {
 }
 
 function typeIcon(t: EducationItem["type"]) {
-  // simple unicode icons (no extra libs)
   switch (t) {
     case "school":
       return "🎓";
@@ -141,6 +143,20 @@ export default function Education() {
               </div>
 
               <p className={styles.description}>{item.description}</p>
+
+              {/* ✅ External Certificate Button */}
+              {item.certificateUrl && (
+                <div className={styles.actions}>
+                  <a
+                    href={item.certificateUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.certBtn}
+                  >
+                    View Certificate
+                  </a>
+                </div>
+              )}
 
               <div className={styles.highlights}>
                 <h4 className={styles.highlightsTitle}>{item.highlightsTitle}</h4>

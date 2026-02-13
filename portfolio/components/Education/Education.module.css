@@ -220,3 +220,27 @@
     align-self: flex-start;
   }
 }
+
+
+.actions {
+  margin: 10px 0 16px;
+}
+
+.certBtn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.certBtn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+}
