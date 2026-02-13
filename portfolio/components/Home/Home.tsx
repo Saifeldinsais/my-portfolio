@@ -3,7 +3,7 @@ import { FaLinkedin, FaGithub, FaKaggle, FaEnvelope, FaFilePdf } from "react-ico
 
 export default function Home() {
   // ✅ replace with your real info
-  const email = "saifeldinsais@gmai.com";
+  const email = "saifeldinsais@gmail.com";
   const cvUrl = "/cv/saif-cv.pdf";
 
   const social = {
