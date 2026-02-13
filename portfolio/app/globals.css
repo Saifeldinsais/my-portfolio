@@ -1,8 +1,4 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ===== Global Reset ===== */
 * {
   margin: 0;
   padding: 0;
@@ -10,31 +6,48 @@
 }
 
 html, body {
-  margin: 0;
-  padding: 0;
-}
-
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #070707; /* fallback */
+  color: white;
 }
 
+/* ===== Animated Gradient Background (Global) ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  /* layered gradients */
+  background:
+    radial-gradient(900px 500px at 15% 15%, rgba(0, 112, 243, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 85% 20%, rgba(121, 40, 202, 0.18), transparent 60%),
+    radial-gradient(1000px 600px at 50% 85%, rgba(0, 200, 120, 0.10), transparent 65%),
+    linear-gradient(120deg, rgba(0, 112, 243, 0.08), rgba(121, 40, 202, 0.06), rgba(255, 255, 255, 0.02));
+
+  filter: blur(18px);
+  opacity: 0.95;
+
+  animation: bgShift 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0% {
+    transform: translate3d(-10px, -10px, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(12px, -6px, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(8px, 14px, 0) scale(1.02);
+  }
+}
+
+/* Optional: smooth scrolling */
 html {
   scroll-behavior: smooth;
 }

@@ -2,8 +2,9 @@
   width: 100%;
   position: sticky;
   top: 0;
-  background: white;
-  border-bottom: 1px solid #eee;
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 1000;
   margin: 0;
 }
@@ -55,7 +56,7 @@
 .navLinks li a {
   font-family: var(--font-poppins);
   text-decoration: none;
-  color: #222;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 16px;
   font-weight: 500;
   padding: 4px 0;
@@ -79,7 +80,7 @@
 }
 
 .navLinks li a:hover {
-  color: #0070f3;
+  color: white;
 }
 
 /* ===================== */
@@ -111,7 +112,7 @@
 }
 
 .socials a {
-  color: #222;
+  color: white;
   font-size: 20px;
   transition: all 0.3s ease;
 }
