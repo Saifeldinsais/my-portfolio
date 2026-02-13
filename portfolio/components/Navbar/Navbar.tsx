@@ -9,7 +9,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <div className={styles.logo}>
-          <Link href="/">Saif Sayes</Link>
+          <Link href="#home">Saif Sayes</Link>
         </div>
 
         {/* Navigation Links */}

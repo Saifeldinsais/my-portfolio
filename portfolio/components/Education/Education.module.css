@@ -1,12 +1,26 @@
 .section {
-  background: radial-gradient(1200px 600px at 20% 0%, rgba(121, 40, 202, 0.16), transparent 60%),
-              radial-gradient(900px 500px at 80% 20%, rgba(0, 112, 243, 0.14), transparent 55%),
-              #070707;
+  position: relative;
+  background: transparent;
   color: white;
   padding: 90px 24px;
 }
 
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(121, 40, 202, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(0, 112, 243, 0.10), transparent 55%);
+  opacity: 0.65;
+}
+
 .container {
+  position: relative;
+  z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
 }

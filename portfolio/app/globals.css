@@ -5,13 +5,69 @@
   box-sizing: border-box;
 }
 
-html, body {
+/* Smooth section edges WITHOUT dark bands */
+section[id] {
+  position: relative;
+  isolation: isolate;
+  /* ensures section overlays don't blend weirdly */
+}
+
+/* Very subtle feather at the top edge */
+section[id]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 28px;
+  pointer-events: none;
+  z-index: 0;
+
+  /* feather only (almost invisible) */
+  background: linear-gradient(to bottom,
+      rgba(6, 8, 26, 0.22),
+      rgba(6, 8, 26, 0));
+}
+
+/* Very subtle feather at the bottom edge */
+section[id]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28px;
+  pointer-events: none;
+  z-index: 0;
+
+  background: linear-gradient(to top,
+      rgba(6, 8, 26, 0.22),
+      rgba(6, 8, 26, 0));
+}
+
+/* Keep content above the feather */
+section[id]>* {
+  position: relative;
+  z-index: 1;
+}
+
+
+html,
+body {
   height: 100%;
 }
 
+:root {
+  --font-body: var(--font-poppins);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-geist-mono);
+}
+
 body {
-  background: #070707; /* fallback */
+  background: #040612;
+  /* fallback — deeper navy */
   color: white;
+  font-family: var(--font-body), sans-serif;
 }
 
 /* ===== Animated Gradient Background (Global) ===== */
@@ -24,13 +80,13 @@ body::before {
 
   /* layered gradients */
   background:
-    radial-gradient(900px 500px at 15% 15%, rgba(0, 112, 243, 0.18), transparent 60%),
-    radial-gradient(900px 500px at 85% 20%, rgba(121, 40, 202, 0.18), transparent 60%),
-    radial-gradient(1000px 600px at 50% 85%, rgba(0, 200, 120, 0.10), transparent 65%),
-    linear-gradient(120deg, rgba(0, 112, 243, 0.08), rgba(121, 40, 202, 0.06), rgba(255, 255, 255, 0.02));
+    radial-gradient(900px 500px at 15% 15%, rgba(15, 35, 120, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 85% 20%, rgba(20, 50, 150, 0.16), transparent 60%),
+    radial-gradient(1000px 600px at 50% 85%, rgba(18, 40, 130, 0.10), transparent 65%),
+    linear-gradient(120deg, rgba(15, 35, 110, 0.08), rgba(20, 45, 140, 0.06), rgba(10, 18, 55, 0.03));
 
   filter: blur(18px);
-  opacity: 0.95;
+  opacity: 0.85;
 
   animation: bgShift 12s ease-in-out infinite alternate;
 }
@@ -39,9 +95,11 @@ body::before {
   0% {
     transform: translate3d(-10px, -10px, 0) scale(1.02);
   }
+
   50% {
     transform: translate3d(12px, -6px, 0) scale(1.04);
   }
+
   100% {
     transform: translate3d(8px, 14px, 0) scale(1.02);
   }

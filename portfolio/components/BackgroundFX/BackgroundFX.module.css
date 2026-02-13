@@ -1,0 +1,290 @@
+/* ========= Particle canvas (lowest layer) ========= */
+.canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -21;
+    pointer-events: none;
+}
+
+/* ========= Full-screen blob layer ========= */
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -20;
+    pointer-events: none;
+    overflow: hidden;
+
+    /* dark navy base — will be overridden per section */
+    background-color: #040612;
+
+    /* subtle depth layers */
+    background-image:
+        radial-gradient(1200px 700px at 20% 10%, rgba(15, 35, 100, 0.06), transparent 60%),
+        radial-gradient(1000px 700px at 80% 10%, rgba(20, 40, 120, 0.05), transparent 60%);
+
+    /* ✅ smooth transitions INCLUDING background-color for section changes */
+    transition:
+        background-color 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+        filter 900ms ease,
+        transform 1200ms ease,
+        opacity 900ms ease;
+
+    filter: brightness(0.82) saturate(1.0);
+}
+
+/* ========= Gradient overlay (smoothly transitions per section) ========= */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -19;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.7;
+
+    /* transitions the gradient smoothly */
+    transition:
+        background 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 1.2s ease;
+}
+
+/* ========= Flash wipe on section change ========= */
+.flash {
+    position: fixed;
+    inset: 0;
+    z-index: -18;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+}
+
+/* Soft glow burst */
+.flash::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    opacity: 0.0;
+
+    background:
+        radial-gradient(700px 380px at 50% 25%, rgba(30, 60, 180, 0.12), transparent 60%),
+        radial-gradient(900px 520px at 30% 70%, rgba(20, 45, 160, 0.07), transparent 65%);
+    filter: blur(6px);
+}
+
+/* Diagonal wipe band */
+.flash::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -60%;
+    width: 140%;
+    height: 140%;
+
+    transform: rotate(-14deg) translateX(-40%);
+    opacity: 0.0;
+
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(30, 60, 180, 0.05) 30%,
+            rgba(45, 90, 200, 0.12) 50%,
+            rgba(30, 60, 180, 0.05) 70%,
+            transparent 100%);
+
+    filter: blur(2px);
+}
+
+
+/* ====== Shared animated blobs (always running) ====== */
+.bg::before,
+.bg::after {
+    content: "";
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    border-radius: 999px;
+
+    filter: blur(80px);
+    opacity: 0.75;
+    transform: translate3d(0, 0, 0);
+
+    /* blobs also smoothly transition their gradient on section change */
+    transition: background 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* blob 1 — slower, cosmic drift */
+.bg::before {
+    left: -220px;
+    top: -220px;
+    animation: float1 14s ease-in-out infinite alternate;
+}
+
+/* blob 2 */
+.bg::after {
+    right: -260px;
+    bottom: -280px;
+    animation: float2 16s ease-in-out infinite alternate;
+    mix-blend-mode: lighten;
+}
+
+@keyframes float1 {
+    0% {
+        transform: translate3d(0px, 0px, 0) scale(1.0);
+    }
+
+    100% {
+        transform: translate3d(120px, 80px, 0) scale(1.08);
+    }
+}
+
+@keyframes float2 {
+    0% {
+        transform: translate3d(0px, 0px, 0) scale(1.0);
+    }
+
+    100% {
+        transform: translate3d(-120px, -90px, 0) scale(1.10);
+    }
+}
+
+/* ✅ When theme switches, flash becomes visible briefly */
+.bg.home~.flash,
+.bg.education~.flash,
+.bg.projects~.flash,
+.bg.experience~.flash,
+.bg.contact~.flash {
+    opacity: 1;
+}
+
+
+/* =====================================================
+   THEMES PER SECTION
+   Each section gets:
+   - Unique dark background-color that transitions smoothly
+   - Unique blob gradients
+   - Unique overlay gradient
+   ===================================================== */
+
+/* HOME — midnight indigo */
+.bg.home {
+    background-color: #040612;
+    filter: brightness(0.82) saturate(1.1);
+}
+
+.bg.home::before {
+    background: radial-gradient(circle at 25% 25%, rgba(20, 40, 150, 0.35), transparent 60%);
+}
+
+.bg.home::after {
+    background: radial-gradient(circle at 70% 70%, rgba(30, 55, 170, 0.28), transparent 60%);
+}
+
+.overlay.home {
+    background:
+        radial-gradient(ellipse 900px 500px at 30% 20%, rgba(15, 35, 130, 0.18), transparent),
+        radial-gradient(ellipse 800px 600px at 75% 80%, rgba(25, 20, 90, 0.14), transparent);
+}
+
+/* EDUCATION — deep sapphire */
+.bg.education {
+    background-color: #050818;
+    filter: brightness(0.80) saturate(1.05);
+    transform: scale(1.01);
+}
+
+.bg.education::before {
+    background: radial-gradient(circle at 30% 30%, rgba(15, 40, 130, 0.32), transparent 60%);
+}
+
+.bg.education::after {
+    background: radial-gradient(circle at 70% 70%, rgba(25, 60, 160, 0.26), transparent 60%);
+}
+
+.overlay.education {
+    background:
+        radial-gradient(ellipse 900px 500px at 25% 30%, rgba(10, 30, 110, 0.20), transparent),
+        radial-gradient(ellipse 800px 600px at 80% 75%, rgba(20, 45, 130, 0.15), transparent);
+}
+
+/* PROJECTS — electric deep blue-violet */
+.bg.projects {
+    background-color: #060714;
+    filter: brightness(0.82) saturate(1.15) contrast(1.02);
+    transform: scale(1.02);
+}
+
+.bg.projects::before {
+    background: radial-gradient(circle at 30% 35%, rgba(30, 50, 170, 0.36), transparent 60%);
+}
+
+.bg.projects::after {
+    background: radial-gradient(circle at 70% 70%, rgba(20, 45, 160, 0.30), transparent 60%);
+}
+
+.overlay.projects {
+    background:
+        radial-gradient(ellipse 1000px 500px at 35% 25%, rgba(25, 40, 150, 0.22), transparent),
+        radial-gradient(ellipse 800px 700px at 70% 80%, rgba(35, 25, 120, 0.16), transparent);
+}
+
+/* EXPERIENCE — dark royal blue-purple */
+.bg.experience {
+    background-color: #050610;
+    filter: brightness(0.80) saturate(1.08);
+    transform: scale(1.015);
+}
+
+.bg.experience::before {
+    background: radial-gradient(circle at 25% 25%, rgba(25, 40, 145, 0.36), transparent 60%);
+}
+
+.bg.experience::after {
+    background: radial-gradient(circle at 70% 75%, rgba(20, 35, 130, 0.30), transparent 60%);
+}
+
+.overlay.experience {
+    background:
+        radial-gradient(ellipse 900px 600px at 20% 35%, rgba(20, 30, 110, 0.20), transparent),
+        radial-gradient(ellipse 800px 500px at 75% 70%, rgba(30, 25, 100, 0.16), transparent);
+}
+
+/* CONTACT — dark ocean blue */
+.bg.contact {
+    background-color: #04071a;
+    filter: brightness(0.80) saturate(1.05);
+    transform: scale(1.01);
+}
+
+.bg.contact::before {
+    background: radial-gradient(circle at 30% 30%, rgba(15, 45, 130, 0.30), transparent 60%);
+}
+
+.bg.contact::after {
+    background: radial-gradient(circle at 70% 70%, rgba(20, 40, 140, 0.28), transparent 60%);
+}
+
+.overlay.contact {
+    background:
+        radial-gradient(ellipse 900px 500px at 30% 25%, rgba(10, 35, 120, 0.18), transparent),
+        radial-gradient(ellipse 800px 600px at 70% 75%, rgba(20, 30, 110, 0.15), transparent);
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .bg::before,
+    .bg::after {
+        animation: none;
+    }
+
+    .bg {
+        transition: none;
+        transform: none !important;
+    }
+
+    .overlay {
+        transition: none;
+    }
+
+    .flash {
+        transition: none;
+    }
+}
